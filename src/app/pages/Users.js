@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 import { USERS } from "../shared/constants"
 import Loading from "../partials/Loading";
+import Modal from "../partials/Modal";
+import HOC from '../HOC/HOC';
+
 
 class Users extends Component {
   state = {
@@ -87,6 +90,7 @@ class Users extends Component {
             <ul className="collection" id="collection">
               {usersJSX}
             </ul>
+            <Modal />
             <ul className="pagination center">
               <li className={pageNumber === 1 ? "disabled" : "waves-effect"} onClick={this.pagination}>
                 <a href="#!">
@@ -106,4 +110,4 @@ class Users extends Component {
   }
 }
 
-export default Users;
+export default HOC(Users);
