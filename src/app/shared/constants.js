@@ -1,1 +1,3 @@
-const domain = "https://reqres.in/api/";
+const domain = "https://reqres.in";
+
+export const USERS = domain + '/api/users?page=';
