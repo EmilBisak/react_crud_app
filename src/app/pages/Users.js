@@ -37,6 +37,7 @@ class Users extends Component {
 
   editUser = (userData, id) => {
     this.closeModal()
+    this.setState({ loading: true })
     return fetch(USER + id, {
       method: 'PUT',
       headers: {
@@ -46,7 +47,27 @@ class Users extends Component {
       body: JSON.stringify(userData),
     })
       .then(response => response.json())
-      .then(response => console.log("User Update -",response))
+      .then(response => {
+        this.setState({ loading: false })
+        console.log(`== User with id-${id} is updated ==`, response)
+      })
+      .catch(error => this.setState({ loading: true, errorMsg: error }))
+  }
+
+  deleteUser = (id) => {
+    this.setState({ loading: true })
+    return fetch(USER + id, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic" + this.props.authToken,
+      }
+    })
+      .then(response => {
+        this.setState({ loading: false })
+        console.log(`== User with id-${id} is deleted ==`, response)
+      })
+      .catch(error => this.setState({ loading: true, errorMsg: error }))
   }
 
   createPaginatinBtns = () => {
@@ -87,12 +108,17 @@ class Users extends Component {
   openUser = (e) => {
     let id = 0;
     if (e.target.parentNode.tagName === "LI") {
-      id = e.target.parentNode.children[3].innerHTML
+      id = e.target.parentNode.children[4].innerHTML
     } else if (e.target.parentNode.tagName === "UL") {
-      id = e.target.children[3].innerHTML
+      id = e.target.children[4].innerHTML
     }
 
     this.getUser(id)
+  }
+
+  deleteUserHandler = (e) => {
+    e.stopPropagation()
+    this.deleteUser((e.target.parentNode.parentNode.children[4].innerHTML))
   }
 
   closeModal = () => {
@@ -101,8 +127,6 @@ class Users extends Component {
 
   handleInput = event => {
     const target = event.target;
-    console.log(target.id);
-
     this.setState({
       [target.id]: target.value
     });
@@ -117,6 +141,9 @@ class Users extends Component {
         return (
           <li className="collection-item avatar transparent" key={user.id} onClick={this.openUser} >
             <img src={user.avatar} alt="avatar" className="circle" />
+            <a className="btn-floating waves-effect waves-light red lighten-2 right" onClick={this.deleteUserHandler}>
+              <i className="material-icons">clear</i>
+            </a>
             <p>{user.first_name}</p>
             <p>{user.last_name}</p>
             <span className="title right">{user.id}</span>
