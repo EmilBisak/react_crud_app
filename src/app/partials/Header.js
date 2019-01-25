@@ -20,15 +20,15 @@ export default class Header extends Component {
             <a href="#!" className="brand-logo center" >
               CRUD Users App
             </a>
-            <a href="#" data-target="mobile-demo" className="sidenav-trigger">
+            <a href="#!" data-target="mobile-demo" className="sidenav-trigger">
               <i className="material-icons">menu</i>
             </a>
             <ul className="left hide-on-med-and-down">
               <li>
-                <a href="sass.html"><i className="material-icons right">people</i>All users</a>
+                <a href="#!"><i className="material-icons right">people</i>All users</a>
               </li>
               <li>
-                <a href="badges.html"><i className="material-icons right">person_add</i>Add user</a>
+                <a href="#!"><i className="material-icons right">person_add</i>Add user</a>
               </li>
             </ul>
           </div>
@@ -36,11 +36,11 @@ export default class Header extends Component {
 
         <ul className="sidenav" id="mobile-demo" ref={this.hamburgerBtn}>
           <li>
-            <a href="sass.html"><i className="material-icons right">people</i>All users</a>
+            <a href="#!"><i className="material-icons right">people</i>All users</a>
             
           </li>
           <li>
-            <a href="badges.html"><i className="material-icons right">person_add</i>Add user</a>
+            <a href="#!"><i className="material-icons right">person_add</i>Add user</a>
             
           </li>
         </ul>

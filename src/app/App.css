@@ -1,6 +1,19 @@
-main {
-    min-height: calc(100vh - 153px);
+html {
+    height: 100%;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    min-height: 100%;
+}
+
+main {
+    min-height: 100%;
+    margin-bottom: -30px;
+}
+
 #main h2.users {
     color: #868688;
     margin: 20px 0;
@@ -41,6 +54,7 @@ li.transparent:hover {
     z-index: 3;
     cursor: pointer;
 }
+
 .transparent .delete-button {
     width: 35px;
     height: 35px;
@@ -56,10 +70,10 @@ li.transparent:hover {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 3333333;
     height: 100%;
-  }
+}
 
 #modal {
     display: block;
@@ -68,11 +82,15 @@ li.transparent:hover {
     transform: scaleX(1) scaleY(1);
     z-index: 333333333;
     overflow-y: initial;
-  }
+}
 
 #main-footer {
     height: 40px;
     padding: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
 }
 
 #main-footer small {
@@ -81,11 +99,12 @@ li.transparent:hover {
 
 @media only screen and (min-width: 401px) {
     #mobile-demo {
-      width: 300px;
+        width: 300px;
     }
-  }
+}
+
 @media only screen and (max-width: 400px) {
     #mobile-demo {
-      width: 230px;
+        width: 230px;
     }
-  }
+}

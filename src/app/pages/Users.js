@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { USERS, USER } from "../shared/constants"
 import Loading from "../partials/Loading";
 import HOC from '../HOC/HOC';
-import Modal from "../partials/Modal";
+// import Modal from "../partials/Modal";
 
 
 class Users extends Component {
@@ -52,6 +52,7 @@ class Users extends Component {
       .then(response => {
         this.setState({ loading: false })
         console.log(`== User with id-${id} is updated ==`, response)
+        alert(`== User with id-${id} is updated ==`, response)
       })
       .catch(error => this.setState({ loading: true, errorMsg: error }))
   }
@@ -68,6 +69,7 @@ class Users extends Component {
       .then(response => {
         this.setState({ loading: false })
         console.log(`== User with id-${id} is deleted ==`, response)
+        alert(`== User with id-${id} is deleted ==`, response)
       })
       .catch(error => this.setState({ loading: true, errorMsg: error }))
   }
@@ -181,7 +183,7 @@ class Users extends Component {
         return (
           <li className="collection-item avatar transparent" key={user.id} onClick={this.openUser} >
             <img src={user.avatar} alt="avatar" className="circle" />
-            <a className="btn-floating waves-effect waves-light red lighten-2 right delete-button" onClick={this.deleteUserHandler}>
+            <a href="#!" className="btn-floating waves-effect waves-light red lighten-1 right delete-button" onClick={this.deleteUserHandler}>
               <i className="material-icons">clear</i>
             </a>
             <p>{user.first_name}</p>
