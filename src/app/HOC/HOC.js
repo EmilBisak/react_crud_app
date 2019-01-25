@@ -15,37 +15,20 @@ const HOC = (WrappedComponent) => {
           "Content-Type": "application/json",
           "Authorization": "Basic" + this.state.authToken,
         },
-        body: JSON.stringify(userData), 
+        body: JSON.stringify(userData),
       })
         .then(response => response.json())
         .then(json => {
           this.setState({ authToken: json.token })
           console.log(this.state);
-          
         })
     }
 
-    openModal = () => {
-      this.setState({ isModalActive: true, openModal: "OPEN" });
-      setTimeout(() => {
-        
-        console.log("ISACTIVE", this.state.isModalActive);
-      }, 2);
-      
-    }
-  
-    closeModal = () => {
-      this.setState({ isModalActive: false });
-    }
-
     render() {
-      return <WrappedComponent 
-      userLogin={this.userLogin} 
-      closeModal={this.closeModal} 
-      openModal={this.openModal} 
-      openModalF={this.state.openModalF} 
-      authToken={this.state.authToken} 
-      isModalActive={this.state.isModalActive}/>;
+      return <WrappedComponent
+        {...this.props}
+        userLogin={this.userLogin}
+        authToken={this.state.authToken} />;
     }
   }
 }

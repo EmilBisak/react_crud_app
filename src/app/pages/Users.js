@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { USERS, USER } from "../shared/constants"
 import Loading from "../partials/Loading";
 import HOC from '../HOC/HOC';
-// import Modal from "../partials/Modal";
+import Modal from "../partials/Modal";
 
 
 class Users extends Component {
@@ -50,7 +50,7 @@ class Users extends Component {
     })
       .then(response => response.json())
       .then(response => {
-        this.setState({ loading: false })
+        this.setState({ loading: false, firstName: "", lastName: "" })
         console.log(`== User with id-${id} is updated ==`, response)
         alert(`== User with id-${id} is updated ==`, response)
       })
@@ -212,48 +212,14 @@ class Users extends Component {
                   </label>
                 </div>
               </div>
-              {isModalActive
-                ?
-                <div className="modal-holder">
-                  <div id="modal" className="modal open">
-                    <div className="modal-content">
-                      <div className="row">
-                        <form className="col s12">
-                          <div className="row">
-                            <img src={user.data.avatar} alt="avatar" className="circle" />
-                            <div className="input-field col s12">
-                              <input id="firstName" type="text" className="validate" defaultValue={user.data.first_name} autoFocus onChange={this.handleInput} />
-                              <label htmlFor="firstName">First Name</label>
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="input-field col s12">
-                              <input id="lastName" type="text" className="validate" defaultValue={user.data.last_name} autoFocus onChange={this.handleInput} />
-                              <label htmlFor="lastName">Last Name</label>
-                            </div>
-                          </div>
-                          <button className="btn waves-effect waves-light" type="button" name="action"
-                            onClick={() => this.editUser(
-                              {
-                                "first_name": firstName ? firstName : user.data.first_name,
-                                "last_name": lastName ? lastName : user.data.last_name
-                              },
-                              user.data.id)}>
-                            Edit User
-                    <i className="material-icons right">edit</i>
-                          </button>
-                          <button className="btn waves-effect waves-light red lighten-1 right" type="submit" name="action" onClick={this.closeModal}>Cancel
-                    <i className="material-icons left">cancel</i>
-                          </button>
-                          <p className="red-text"></p>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                :
-                null
-              }
+              <Modal
+                isModalActive={isModalActive}
+                user={user}
+                firstName={firstName}
+                lastName={lastName}
+                closeModal={this.closeModal}
+                handleInput={this.handleInput}
+                editUser={this.editUser} />
               <ul className="collection" id="collection">
                 {usersJSX}
               </ul>

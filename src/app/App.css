@@ -23,6 +23,11 @@ main {
     margin-bottom: 30px;
 }
 
+#sort-holder label {
+    position: relative;
+    left: 10px;
+}
+
 #collection {
     margin-bottom: 80px;
 }
