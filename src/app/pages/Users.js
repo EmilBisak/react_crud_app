@@ -13,6 +13,8 @@ class Users extends Component {
     loading: true,
     pageNumber: 1,
     isModalActive: false,
+    filtered: [],
+    sortToggle: false
   };
 
   componentDidMount() {
@@ -23,7 +25,7 @@ class Users extends Component {
     this.setState({ loading: true })
     fetch(USERS + pageNumber)
       .then(res => res.json())
-      .then(json => this.setState({ users: json, loading: false }))
+      .then(json => this.setState({ users: json, filtered: json, loading: false }))
       .catch(error => this.setState({ loading: true, errorMsg: error }))
   }
 
@@ -68,6 +70,44 @@ class Users extends Component {
         console.log(`== User with id-${id} is deleted ==`, response)
       })
       .catch(error => this.setState({ loading: true, errorMsg: error }))
+  }
+
+  sortByAtoZAsc = () => {
+    let arr = this.state.users.data.sort((a, b) => {
+      let x = a.first_name.toLowerCase();
+      let y = b.first_name.toLowerCase();
+
+      if (x < y) {
+        return -1;
+      }
+      if (y < x) {
+        return 1
+      }
+      return 0;
+    })
+    this.setState({ filtered: arr })
+  }
+
+  sortById = () => {
+    let arr = this.state.users.data.sort((a, b) => {
+      let x = a.id;
+      let y = b.id;
+
+      if (x < y) {
+        return -1;
+      }
+      if (y < x) {
+        return 1
+      }
+      return 0;
+    })
+    this.setState({ filtered: arr })
+  }
+
+  toggleSort = () => {
+    this.setState({ toggleSort: !this.state.toggleSort }, () => {
+      this.state.toggleSort ? this.sortByAtoZAsc() : this.sortById();
+    })
   }
 
   createPaginatinBtns = () => {
@@ -141,7 +181,7 @@ class Users extends Component {
         return (
           <li className="collection-item avatar transparent" key={user.id} onClick={this.openUser} >
             <img src={user.avatar} alt="avatar" className="circle" />
-            <a className="btn-floating waves-effect waves-light red lighten-2 right" onClick={this.deleteUserHandler}>
+            <a className="btn-floating waves-effect waves-light red lighten-2 right delete-button" onClick={this.deleteUserHandler}>
               <i className="material-icons">clear</i>
             </a>
             <p>{user.first_name}</p>
@@ -157,67 +197,79 @@ class Users extends Component {
       :
       <main id="main">
         <div className="container">
-          <div className="content-inside">
-            <h2 className="center users">Users</h2>
-            {isModalActive
-              ?
-              <div className="modal-holder">
-                <div id="modal" className="modal open">
-                  <div className="modal-content">
-                    <div className="row">
-                      <form className="col s12">
-                        <div className="row">
-                          <img src={user.data.avatar} alt="avatar" className="circle" />
-                          <div className="input-field col s12">
-                            <input id="firstName" type="text" className="validate" defaultValue={user.data.first_name} autoFocus onChange={this.handleInput} />
-                            <label htmlFor="firstName">First Name</label>
+          <div className="row">
+            <div className="col s12 xl10 offset-xl1">
+              <h2 className="center users">Users</h2>
+              <div className="switch center">
+                <h6>Sort Users</h6>
+                <div id="sort-holder">
+                  <label>By Id
+                  <input type="checkbox"></input>
+                    <span className="lever" onClick={this.toggleSort}></span>
+                    By Name
+                  </label>
+                </div>
+              </div>
+              {isModalActive
+                ?
+                <div className="modal-holder">
+                  <div id="modal" className="modal open">
+                    <div className="modal-content">
+                      <div className="row">
+                        <form className="col s12">
+                          <div className="row">
+                            <img src={user.data.avatar} alt="avatar" className="circle" />
+                            <div className="input-field col s12">
+                              <input id="firstName" type="text" className="validate" defaultValue={user.data.first_name} autoFocus onChange={this.handleInput} />
+                              <label htmlFor="firstName">First Name</label>
+                            </div>
                           </div>
-                        </div>
-                        <div className="row">
-                          <div className="input-field col s12">
-                            <input id="lastName" type="text" className="validate" defaultValue={user.data.last_name} autoFocus onChange={this.handleInput} />
-                            <label htmlFor="lastName">Last Name</label>
+                          <div className="row">
+                            <div className="input-field col s12">
+                              <input id="lastName" type="text" className="validate" defaultValue={user.data.last_name} autoFocus onChange={this.handleInput} />
+                              <label htmlFor="lastName">Last Name</label>
+                            </div>
                           </div>
-                        </div>
-                        <button className="btn waves-effect waves-light" type="button" name="action"
-                          onClick={() => this.editUser(
-                            {
-                              "first_name": firstName ? firstName : user.data.first_name,
-                              "last_name": lastName ? lastName : user.data.last_name
-                            },
-                            user.data.id)}>
-                          Edit User
+                          <button className="btn waves-effect waves-light" type="button" name="action"
+                            onClick={() => this.editUser(
+                              {
+                                "first_name": firstName ? firstName : user.data.first_name,
+                                "last_name": lastName ? lastName : user.data.last_name
+                              },
+                              user.data.id)}>
+                            Edit User
                     <i className="material-icons right">edit</i>
-                        </button>
-                        <button className="btn waves-effect waves-light red lighten-1 right" type="submit" name="action" onClick={this.closeModal}>Cancel
+                          </button>
+                          <button className="btn waves-effect waves-light red lighten-1 right" type="submit" name="action" onClick={this.closeModal}>Cancel
                     <i className="material-icons left">cancel</i>
-                        </button>
-                        <p className="red-text"></p>
-                      </form>
+                          </button>
+                          <p className="red-text"></p>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              :
-              null
-            }
-            <ul className="collection" id="collection">
-              {usersJSX}
-            </ul>
-            <ul className="pagination center">
-              <li className={pageNumber === 1 ? "disabled" : "waves-effect"} onClick={this.pagination}>
-                <a href="#!">
-                  <i className="material-icons">chevron_left</i>
-                </a>
-              </li>
-              {this.createPaginatinBtns()}
-              <li className={pageNumber === 4 ? "disabled" : "waves-effect"} onClick={this.pagination}>
-                <a href="#!">
-                  <i className="material-icons">chevron_right</i>
-                </a>
-              </li>
-            </ul>
-            <Modal />
+                :
+                null
+              }
+              <ul className="collection" id="collection">
+                {usersJSX}
+              </ul>
+              <ul className="pagination center">
+                <li className={pageNumber === 1 ? "disabled" : "waves-effect"} onClick={this.pagination}>
+                  <a href="#!">
+                    <i className="material-icons">chevron_left</i>
+                  </a>
+                </li>
+                {this.createPaginatinBtns()}
+                <li className={pageNumber === 4 ? "disabled" : "waves-effect"} onClick={this.pagination}>
+                  <a href="#!">
+                    <i className="material-icons">chevron_right</i>
+                  </a>
+                </li>
+              </ul>
+              {/* <Modal /> */}
+            </div>
           </div>
         </div>
       </main >

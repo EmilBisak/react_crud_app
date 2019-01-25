@@ -3,10 +3,15 @@ main {
 }
 #main h2.users {
     color: #868688;
+    margin: 20px 0;
+}
+
+#sort-holder {
+    margin-bottom: 30px;
 }
 
 #collection {
-    margin-bottom: 150px;
+    margin-bottom: 80px;
 }
 
 #pagination {
@@ -29,11 +34,20 @@ li.transparent:hover {
     border: 1px solid #999999;
     border-bottom: 1px solid #999999 !important;
 }
+
 .transparent {
     width: 100%;
     height: 100%;
     z-index: 3;
     cursor: pointer;
+}
+.transparent .delete-button {
+    width: 35px;
+    height: 35px;
+}
+
+.transparent .delete-button i {
+    line-height: 35px;
 }
 
 .modal-holder {
@@ -64,3 +78,14 @@ li.transparent:hover {
 #main-footer small {
     line-height: 40px;
 }
+
+@media only screen and (min-width: 401px) {
+    #mobile-demo {
+      width: 300px;
+    }
+  }
+@media only screen and (max-width: 400px) {
+    #mobile-demo {
+      width: 230px;
+    }
+  }
