@@ -6,7 +6,7 @@ const Modal = (props) => (
         {
             "email": "emil@bisak",
             "password": "emilbisak"
-        })}>Click</button>
+        })}>Click to get authToken</button>
 );
 
 

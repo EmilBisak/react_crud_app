@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 
 
 const HOC = (WrappedComponent) => {
-  return class LoadingHOC extends Component {
+  return class HOC extends Component {
     state = {
-      authToken: ""
+      authToken: "",
     }
 
     userLogin = (userData = {}) => {
@@ -25,8 +25,27 @@ const HOC = (WrappedComponent) => {
         })
     }
 
+    openModal = () => {
+      this.setState({ isModalActive: true, openModal: "OPEN" });
+      setTimeout(() => {
+        
+        console.log("ISACTIVE", this.state.isModalActive);
+      }, 2);
+      
+    }
+  
+    closeModal = () => {
+      this.setState({ isModalActive: false });
+    }
+
     render() {
-      return <WrappedComponent userLogin={this.userLogin} authToken={this.state.authToken} />;
+      return <WrappedComponent 
+      userLogin={this.userLogin} 
+      closeModal={this.closeModal} 
+      openModal={this.openModal} 
+      openModalF={this.state.openModalF} 
+      authToken={this.state.authToken} 
+      isModalActive={this.state.isModalActive}/>;
     }
   }
 }

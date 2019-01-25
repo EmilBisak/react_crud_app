@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 
-import { USERS } from "../shared/constants"
+import { USERS, USER } from "../shared/constants"
 import Loading from "../partials/Loading";
-import Modal from "../partials/Modal";
 import HOC from '../HOC/HOC';
+import Modal from "../partials/Modal";
 
 
 class Users extends Component {
   state = {
     users: "",
+    user: "",
     loading: true,
-    pageNumber: 1
+    pageNumber: 1,
+    isModalActive: false,
   };
 
   componentDidMount() {
@@ -21,8 +23,30 @@ class Users extends Component {
     this.setState({ loading: true })
     fetch(USERS + pageNumber)
       .then(res => res.json())
-      .then(json =>this.setState({ users: json, loading: false }))
+      .then(json => this.setState({ users: json, loading: false }))
       .catch(error => this.setState({ loading: true, errorMsg: error }))
+  }
+
+  getUser = (id) => {
+    this.setState({ loading: true })
+    fetch(USER + id)
+      .then(res => res.json())
+      .then(json => this.setState({ user: json, loading: false, isModalActive: true }))
+      .catch(error => this.setState({ loading: true, errorMsg: error }))
+  }
+
+  editUser = (userData, id) => {
+    this.closeModal()
+    return fetch(USER + id, {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic" + this.props.authToken,
+      },
+      body: JSON.stringify(userData),
+    })
+      .then(response => response.json())
+      .then(response => console.log("User Update -",response))
   }
 
   createPaginatinBtns = () => {
@@ -30,7 +54,7 @@ class Users extends Component {
     let paginationJSX = [];
     for (let i = 0; i < (users.total / users.per_page); i++) {
       let currentPage = i + 1;
-      let liElement = <li key={"pageNum_" + currentPage} className={pageNumber === currentPage ? "active" : "waves-effect"} onClick={this.pagination}>
+      let liElement = <li key={"pageNum_" + currentPage} className={pageNumber === currentPage ? "active orange darken-3" : "waves-effect"} onClick={this.pagination}>
         <a href="#!">{currentPage}</a>
       </li>
       paginationJSX.push(liElement);
@@ -60,24 +84,45 @@ class Users extends Component {
     }
   }
 
+  openUser = (e) => {
+    let id = 0;
+    if (e.target.parentNode.tagName === "LI") {
+      id = e.target.parentNode.children[3].innerHTML
+    } else if (e.target.parentNode.tagName === "UL") {
+      id = e.target.children[3].innerHTML
+    }
+
+    this.getUser(id)
+  }
+
+  closeModal = () => {
+    this.setState({ isModalActive: false });
+  }
+
+  handleInput = event => {
+    const target = event.target;
+    console.log(target.id);
+
+    this.setState({
+      [target.id]: target.value
+    });
+  };
+
   render() {
-    const { pageNumber, users, loading } = this.state;
-
-
+    const { pageNumber, users, user, loading, isModalActive, firstName, lastName } = this.state;
 
     let usersJSX = !users
       ? <Loading />
       : users.data.map(user => {
         return (
-          <li className="collection-item avatar" key={user.id}>
+          <li className="collection-item avatar transparent" key={user.id} onClick={this.openUser} >
             <img src={user.avatar} alt="avatar" className="circle" />
-            <span className="title right">{user.id}</span>
             <p>{user.first_name}</p>
             <p>{user.last_name}</p>
+            <span className="title right">{user.id}</span>
           </li>
         );
       });
-
 
     return loading
       ?
@@ -86,11 +131,52 @@ class Users extends Component {
       <main id="main">
         <div className="container">
           <div className="content-inside">
-            <h2>Users</h2>
+            <h2 className="center users">Users</h2>
+            {isModalActive
+              ?
+              <div className="modal-holder">
+                <div id="modal" className="modal open">
+                  <div className="modal-content">
+                    <div className="row">
+                      <form className="col s12">
+                        <div className="row">
+                          <img src={user.data.avatar} alt="avatar" className="circle" />
+                          <div className="input-field col s12">
+                            <input id="firstName" type="text" className="validate" defaultValue={user.data.first_name} autoFocus onChange={this.handleInput} />
+                            <label htmlFor="firstName">First Name</label>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="input-field col s12">
+                            <input id="lastName" type="text" className="validate" defaultValue={user.data.last_name} autoFocus onChange={this.handleInput} />
+                            <label htmlFor="lastName">Last Name</label>
+                          </div>
+                        </div>
+                        <button className="btn waves-effect waves-light" type="button" name="action"
+                          onClick={() => this.editUser(
+                            {
+                              "first_name": firstName ? firstName : user.data.first_name,
+                              "last_name": lastName ? lastName : user.data.last_name
+                            },
+                            user.data.id)}>
+                          Edit User
+                    <i className="material-icons right">edit</i>
+                        </button>
+                        <button className="btn waves-effect waves-light red lighten-1 right" type="submit" name="action" onClick={this.closeModal}>Cancel
+                    <i className="material-icons left">cancel</i>
+                        </button>
+                        <p className="red-text"></p>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              :
+              null
+            }
             <ul className="collection" id="collection">
               {usersJSX}
             </ul>
-            <Modal />
             <ul className="pagination center">
               <li className={pageNumber === 1 ? "disabled" : "waves-effect"} onClick={this.pagination}>
                 <a href="#!">
@@ -104,9 +190,10 @@ class Users extends Component {
                 </a>
               </li>
             </ul>
+            <Modal />
           </div>
         </div>
-      </main>
+      </main >
   }
 }
 

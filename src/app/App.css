@@ -1,6 +1,9 @@
 main {
     min-height: calc(100vh - 153px);
 }
+#main h2.users {
+    color: #868688;
+}
 
 #collection {
     margin-bottom: 150px;
@@ -21,6 +24,37 @@ main {
 .loading-holder img {
     align-self: center;
 }
+
+li.transparent:hover {
+    border: 1px solid #999999;
+    border-bottom: 1px solid #999999 !important;
+}
+.transparent {
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.modal-holder {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 3333333;
+    height: 100%;
+  }
+
+#modal {
+    display: block;
+    opacity: 1;
+    top: 20%;
+    transform: scaleX(1) scaleY(1);
+    z-index: 333333333;
+    overflow-y: initial;
+  }
 
 #main-footer {
     height: 40px;
