@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import HOC from '../HOC/HOC';
 
-class Modal extends Component {
+class ModalEditUser extends Component {
     // <button onClick={() => props.userLogin(
     //     {
     //         "email": "emil@bisak",
     //         "password": "emilbisak"
     //     })}>Click to get authToken</button>
 
+    onFormSubmitHandler = e => {
+        e.preventDefault();
+    }
+
     render() {
         const { isModalActive, user, firstName, lastName, closeModal, handleInput, editUser } = this.props
         console.log("PROPS", this.props);
-        
+
         return !isModalActive
             ?
             null
@@ -20,7 +24,7 @@ class Modal extends Component {
                 <div id="modal" className="modal open">
                     <div className="modal-content">
                         <div className="row">
-                            <form className="col s12">
+                            <form className="col s12" onSubmit={this.onFormSubmitHandler}>
                                 <div className="row">
                                     <img src={user.data.avatar} alt="avatar" className="circle" />
                                     <div className="input-field col s12">
@@ -57,4 +61,4 @@ class Modal extends Component {
 }
 
 
-export default HOC(Modal);
+export default HOC(ModalEditUser);

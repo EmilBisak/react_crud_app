@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { USERS, USER } from "../shared/constants"
 import Loading from "../partials/Loading";
 import HOC from '../HOC/HOC';
-import Modal from "../partials/Modal";
+import ModalEditUser from "../partials/ModalEditUser";
 
 
 class Users extends Component {
@@ -212,7 +212,7 @@ class Users extends Component {
                   </label>
                 </div>
               </div>
-              <Modal
+              <ModalEditUser
                 isModalActive={isModalActive}
                 user={user}
                 firstName={firstName}

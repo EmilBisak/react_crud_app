@@ -28,7 +28,7 @@ export default class Header extends Component {
                 <a href="#!"><i className="material-icons right">people</i>All users</a>
               </li>
               <li>
-                <a href="#!"><i className="material-icons right">person_add</i>Add user</a>
+                <a href="#!"><i className="material-icons right">person_add</i>Create user</a>
               </li>
             </ul>
           </div>
@@ -40,7 +40,7 @@ export default class Header extends Component {
             
           </li>
           <li>
-            <a href="#!"><i className="material-icons right">person_add</i>Add user</a>
+            <a href="#!"><i className="material-icons right">person_add</i>Create user</a>
             
           </li>
         </ul>

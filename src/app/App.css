@@ -89,6 +89,22 @@ li.transparent:hover {
     overflow-y: initial;
 }
 
+#create-user-main form {
+    position: relative;
+    top: 80px;
+}
+
+.error-msg {
+    color: red;
+}
+
+#new-user-button-holder {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 92px;
+}
+
 #main-footer {
     height: 40px;
     padding: 0;
@@ -96,10 +112,21 @@ li.transparent:hover {
     bottom: 0;
     width: 100%;
     color: #fff;
+    z-index: 4;
 }
 
 #main-footer small {
     line-height: 40px;
+}
+
+.datepicker-title {
+    color: rgb(38, 166, 154);
+}
+
+.calendar-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center
 }
 
 @media only screen and (min-width: 401px) {
