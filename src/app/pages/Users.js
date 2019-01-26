@@ -17,7 +17,9 @@ class Users extends Component {
     sortToggle: false,
     first_name_edited: "",
     last_name_edited: "",
-    edited_user_id: ""
+    edited_user_id: "",
+    deleted_user_id: [],
+    isUserDeleted: false
   };
 
   componentDidMount() {
@@ -61,8 +63,8 @@ class Users extends Component {
           last_name_edited: response.last_name,
           edited_user_id: id
         })
-        console.log(`== User with id-${id} is updated ==`, response)
-        alert(`== User with id-${id} is updated ==`, response)
+        console.log(`== User with id-${id} is updated ==`, response);
+        // alert(`== User with id-${id} is updated ==`, response);
 
       })
       .catch(error => this.setState({ loading: true, errorMsg: error }))
@@ -78,9 +80,12 @@ class Users extends Component {
       }
     })
       .then(response => {
-        this.setState({ loading: false })
+        this.setState({
+          loading: false,
+          isUserDeleted: true,
+          deleted_user_id: [...this.state.deleted_user_id, id]
+        })
         console.log(`== User with id-${id} is deleted ==`, response)
-        alert(`== User with id-${id} is deleted ==`, response)
       })
       .catch(error => this.setState({ loading: true, errorMsg: error }))
   }
@@ -132,7 +137,7 @@ class Users extends Component {
         key={"pageNum_" + currentPage}
         className={pageNumber === currentPage ? "active orange darken-3" : "waves-effect"}
         onClick={this.pagination}>
-        <a href="#!">{currentPage}</a>
+        <a>{currentPage}</a>
       </li>
       paginationJSX.push(liElement);
     }
@@ -189,18 +194,19 @@ class Users extends Component {
   };
 
   render() {
-    const { pageNumber, users, user, loading, isModalActive, firstName, lastName, edited_user_id, first_name_edited, last_name_edited } = this.state;
+    console.log(this.state);
+    const { pageNumber, users, user, loading, isModalActive, firstName, lastName, edited_user_id, first_name_edited, last_name_edited, deleted_user_id, isUserDeleted } = this.state;
 
     let usersJSX = !users
       ? <Loading />
       : users.data.map(user => {
         let isEdited = edited_user_id === user.id;
         return (
-          <li className="collection-item avatar transparent" key={user.id} onClick={this.openUser} >
+          <li className={isUserDeleted && deleted_user_id.includes(`${user.id}`) ? "hide" : "collection-item avatar transparent"} key={user.id} onClick={this.openUser} >
             <img src={user.avatar} alt="avatar" className="circle" />
-            <a href="#!" className="btn-floating waves-effect waves-light red lighten-1 right delete-button" onClick={this.deleteUserHandler}>
+            <span className="btn-floating waves-effect waves-light red lighten-1 right delete-button" onClick={this.deleteUserHandler}>
               <i className="material-icons">clear</i>
-            </a>
+            </span>
             <p>{isEdited ? first_name_edited : user.first_name}</p>
             <p>{isEdited ? last_name_edited : user.last_name}</p>
             <span className="title right">{user.id}</span>
@@ -240,15 +246,15 @@ class Users extends Component {
               </ul>
               <ul className="pagination center">
                 <li className={pageNumber === 1 ? "disabled" : "waves-effect"} onClick={this.pagination}>
-                  <a href="#!">
+                  <span>
                     <i className="material-icons">chevron_left</i>
-                  </a>
+                  </span>
                 </li>
                 {this.createPaginatinBtns()}
                 <li className={pageNumber === 4 ? "disabled" : "waves-effect"} onClick={this.pagination}>
-                  <a href="#!">
+                  <span>
                     <i className="material-icons">chevron_right</i>
-                  </a>
+                  </span>
                 </li>
               </ul>
               {/* <Modal /> */}

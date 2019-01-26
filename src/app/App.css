@@ -105,6 +105,14 @@ li.transparent:hover {
     height: 92px;
 }
 
+.hideEl {
+    display: none !important;
+}
+
+span.sidenav-trigger {
+    cursor: pointer;
+}
+
 #main-footer {
     height: 40px;
     padding: 0;

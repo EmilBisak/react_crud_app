@@ -18,12 +18,10 @@ export default class Header extends Component {
       <header>
         <nav className="indigo accent-2">
           <div className="nav-wrapper">
-            <a href="#!" className="brand-logo center" >
-              CRUD Users App
-            </a>
-            <a href="#!" data-target="mobile-demo" className="sidenav-trigger">
+              <Link to="/" className="brand-logo center" replace>CRUD Users App</Link>
+            <span data-target="mobile-demo" className="sidenav-trigger">
               <i className="material-icons">menu</i>
-            </a>
+            </span>
             <ul className="left hide-on-med-and-down">
               <li>
                 <Link to="/" replace><i className="material-icons right">people</i>All users</Link>
