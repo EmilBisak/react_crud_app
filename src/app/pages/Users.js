@@ -14,7 +14,10 @@ class Users extends Component {
     pageNumber: 1,
     isModalActive: false,
     filtered: [],
-    sortToggle: false
+    sortToggle: false,
+    first_name_edited: "",
+    last_name_edited: "",
+    edited_user_id: ""
   };
 
   componentDidMount() {
@@ -50,9 +53,17 @@ class Users extends Component {
     })
       .then(response => response.json())
       .then(response => {
-        this.setState({ loading: false, firstName: "", lastName: "" })
+        this.setState({
+          loading: false,
+          firstName: "",
+          lastName: "",
+          first_name_edited: response.first_name,
+          last_name_edited: response.last_name,
+          edited_user_id: id
+        })
         console.log(`== User with id-${id} is updated ==`, response)
         alert(`== User with id-${id} is updated ==`, response)
+
       })
       .catch(error => this.setState({ loading: true, errorMsg: error }))
   }
@@ -117,7 +128,10 @@ class Users extends Component {
     let paginationJSX = [];
     for (let i = 0; i < (users.total / users.per_page); i++) {
       let currentPage = i + 1;
-      let liElement = <li key={"pageNum_" + currentPage} className={pageNumber === currentPage ? "active orange darken-3" : "waves-effect"} onClick={this.pagination}>
+      let liElement = <li
+        key={"pageNum_" + currentPage}
+        className={pageNumber === currentPage ? "active orange darken-3" : "waves-effect"}
+        onClick={this.pagination}>
         <a href="#!">{currentPage}</a>
       </li>
       paginationJSX.push(liElement);
@@ -175,19 +189,20 @@ class Users extends Component {
   };
 
   render() {
-    const { pageNumber, users, user, loading, isModalActive, firstName, lastName } = this.state;
+    const { pageNumber, users, user, loading, isModalActive, firstName, lastName, edited_user_id, first_name_edited, last_name_edited } = this.state;
 
     let usersJSX = !users
       ? <Loading />
       : users.data.map(user => {
+        let isEdited = edited_user_id === user.id;
         return (
           <li className="collection-item avatar transparent" key={user.id} onClick={this.openUser} >
             <img src={user.avatar} alt="avatar" className="circle" />
             <a href="#!" className="btn-floating waves-effect waves-light red lighten-1 right delete-button" onClick={this.deleteUserHandler}>
               <i className="material-icons">clear</i>
             </a>
-            <p>{user.first_name}</p>
-            <p>{user.last_name}</p>
+            <p>{isEdited ? first_name_edited : user.first_name}</p>
+            <p>{isEdited ? last_name_edited : user.last_name}</p>
             <span className="title right">{user.id}</span>
           </li>
         );
