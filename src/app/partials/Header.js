@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import M from 'materialize-css';
 
@@ -25,10 +26,10 @@ export default class Header extends Component {
             </a>
             <ul className="left hide-on-med-and-down">
               <li>
-                <a href="#!"><i className="material-icons right">people</i>All users</a>
+                <Link to="/" replace><i className="material-icons right">people</i>All users</Link>
               </li>
               <li>
-                <a href="#!"><i className="material-icons right">person_add</i>Create user</a>
+                <Link to="/create_user" replace><i className="material-icons right">person_add</i>Create user</Link>
               </li>
             </ul>
           </div>
@@ -36,12 +37,10 @@ export default class Header extends Component {
 
         <ul className="sidenav" id="mobile-demo" ref={this.hamburgerBtn}>
           <li>
-            <a href="#!"><i className="material-icons right">people</i>All users</a>
-            
+            <Link to="/" replace><i className="material-icons right">people</i>All users</Link>
           </li>
           <li>
-            <a href="#!"><i className="material-icons right">person_add</i>Create user</a>
-            
+            <Link to="/create_user" replace><i className="material-icons right">person_add</i>Create user</Link>
           </li>
         </ul>
       </header>

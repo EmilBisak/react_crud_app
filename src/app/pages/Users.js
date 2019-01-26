@@ -21,7 +21,7 @@ class Users extends Component {
     this.getUsers(this.state.pageNumber);
   }
 
-  getUsers = (pageNumber) => {
+  getUsers = pageNumber => {
     this.setState({ loading: true })
     fetch(USERS + pageNumber)
       .then(res => res.json())
@@ -29,9 +29,9 @@ class Users extends Component {
       .catch(error => this.setState({ loading: true, errorMsg: error }))
   }
 
-  getUser = (id) => {
+  getUser = id => {
     this.setState({ loading: true })
-    fetch(USER + id)
+    fetch(USER + "/" + id)
       .then(res => res.json())
       .then(json => this.setState({ user: json, loading: false, isModalActive: true }))
       .catch(error => this.setState({ loading: true, errorMsg: error }))
@@ -40,7 +40,7 @@ class Users extends Component {
   editUser = (userData, id) => {
     this.closeModal()
     this.setState({ loading: true })
-    return fetch(USER + id, {
+    return fetch(USER + "/" + id, {
       method: 'PUT',
       headers: {
         "Content-Type": "application/json",
@@ -57,9 +57,9 @@ class Users extends Component {
       .catch(error => this.setState({ loading: true, errorMsg: error }))
   }
 
-  deleteUser = (id) => {
+  deleteUser = id => {
     this.setState({ loading: true })
-    return fetch(USER + id, {
+    return fetch(USER + "/" + id, {
       method: 'DELETE',
       headers: {
         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ class Users extends Component {
     return paginationJSX
   }
 
-  pagination = (e) => {
+  pagination = e => {
     const { pageNumber, users } = this.state
     let pageNum = parseInt(e.target.innerHTML)
     if (!isNaN(pageNum)) {
@@ -147,7 +147,7 @@ class Users extends Component {
     }
   }
 
-  openUser = (e) => {
+  openUser = e => {
     let id = 0;
     if (e.target.parentNode.tagName === "LI") {
       id = e.target.parentNode.children[4].innerHTML
@@ -158,7 +158,7 @@ class Users extends Component {
     this.getUser(id)
   }
 
-  deleteUserHandler = (e) => {
+  deleteUserHandler = e => {
     e.stopPropagation()
     this.deleteUser((e.target.parentNode.parentNode.children[4].innerHTML))
   }

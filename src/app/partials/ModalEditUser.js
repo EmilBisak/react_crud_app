@@ -14,7 +14,6 @@ class ModalEditUser extends Component {
 
     render() {
         const { isModalActive, user, firstName, lastName, closeModal, handleInput, editUser } = this.props
-        console.log("PROPS", this.props);
 
         return !isModalActive
             ?

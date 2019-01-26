@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import HOC from "../HOC/HOC";
+import { USER } from "../shared/constants";
 
 class CreateUser extends Component {
     state = {
@@ -18,6 +19,20 @@ class CreateUser extends Component {
         maskPhoneFormat: ""
     }
 
+    createUser = (userData = {}) => {
+        return fetch(USER, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic" + this.props.authToken,
+            },
+            body: JSON.stringify(userData),
+        })
+            .then(response => {
+                console.log(response);
+                alert("User is created")
+            });
+    }
 
     validateEmail = email => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -26,7 +41,7 @@ class CreateUser extends Component {
 
     validatePhone = number => {
         let digits = ("" + number)
-        const re = /^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/
+        const re = /^(1\s|1|)?((\(\d{3}\))|\d{3})(-|\s)?(\d{3})(-|\s)?(\d{4})$/
         return re.test(digits);
     }
 
@@ -43,11 +58,21 @@ class CreateUser extends Component {
         }
 
         this.setState({ maskPhoneFormat: formatArr.join("") });
-
     }
 
     onFormSubmitHandler = e => {
         e.preventDefault();
+        const { first_name, last_name, email, tel, date, showPhoneErr, showEmailErr } = this.state;
+        if (!showPhoneErr && !showEmailErr) {
+            this.createUser({
+                "name": first_name + " " + last_name,
+                "job": "leader",
+                "email": email,
+                "tel": tel,
+                "dateOfBirth": date
+            })
+            this.props.goToHomepage();
+        }
     }
 
     onChangeInputHandler = e => {

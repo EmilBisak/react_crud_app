@@ -24,11 +24,14 @@ const HOC = (WrappedComponent) => {
         })
     }
 
+    goToHomepage = () => this.props.history.push("/");
+
     render() {
       return <WrappedComponent
         {...this.props}
         userLogin={this.userLogin}
-        authToken={this.state.authToken} />;
+        authToken={this.state.authToken}
+        goToHomepage={this.goToHomepage} />;
     }
   }
 }
