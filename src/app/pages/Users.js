@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import { USERS, USER } from "../shared/constants"
 import Loading from "../partials/Loading";
@@ -49,7 +50,7 @@ class Users extends Component {
       method: 'PUT',
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Basic" + this.props.authToken,
+        "Authorization": "Basic" + this.props.getAuth(),
       },
       body: JSON.stringify(userData),
     })
@@ -76,7 +77,7 @@ class Users extends Component {
       method: 'DELETE',
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Basic" + this.props.authToken,
+        "Authorization": "Basic" + this.props.getAuth(),
       }
     })
       .then(response => {
@@ -137,7 +138,7 @@ class Users extends Component {
         key={"pageNum_" + currentPage}
         className={pageNumber === currentPage ? "active orange darken-3" : "waves-effect"}
         onClick={this.pagination}>
-        <a>{currentPage}</a>
+        <Link to="/users" replace>{currentPage}</Link>
       </li>
       paginationJSX.push(liElement);
     }
@@ -194,8 +195,19 @@ class Users extends Component {
   };
 
   render() {
-    console.log(this.state);
-    const { pageNumber, users, user, loading, isModalActive, firstName, lastName, edited_user_id, first_name_edited, last_name_edited, deleted_user_id, isUserDeleted } = this.state;
+    const { 
+      pageNumber, 
+      users, 
+      user, 
+      loading, 
+      isModalActive, 
+      firstName, 
+      lastName, 
+      edited_user_id, 
+      first_name_edited, 
+      last_name_edited, 
+      deleted_user_id, 
+      isUserDeleted } = this.state;
 
     let usersJSX = !users
       ? <Loading />
@@ -246,18 +258,17 @@ class Users extends Component {
               </ul>
               <ul className="pagination center">
                 <li className={pageNumber === 1 ? "disabled" : "waves-effect"} onClick={this.pagination}>
-                  <span>
+                  <Link to="/users" replace>
                     <i className="material-icons">chevron_left</i>
-                  </span>
+                  </Link>
                 </li>
                 {this.createPaginatinBtns()}
                 <li className={pageNumber === 4 ? "disabled" : "waves-effect"} onClick={this.pagination}>
-                  <span>
+                  <Link to="/users" replace>
                     <i className="material-icons">chevron_right</i>
-                  </span>
+                  </Link>
                 </li>
               </ul>
-              {/* <Modal /> */}
             </div>
           </div>
         </div>

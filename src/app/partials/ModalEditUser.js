@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import HOC from '../HOC/HOC';
 
 class ModalEditUser extends Component {
-    // <button onClick={() => props.userLogin(
-    //     {
-    //         "email": "emil@bisak",
-    //         "password": "emilbisak"
-    //     })}>Click to get authToken</button>
-
     onFormSubmitHandler = e => {
         e.preventDefault();
     }

@@ -105,14 +105,6 @@ li.transparent:hover {
     height: 92px;
 }
 
-.hideEl {
-    display: none !important;
-}
-
-span.sidenav-trigger {
-    cursor: pointer;
-}
-
 #main-footer {
     height: 40px;
     padding: 0;
@@ -135,6 +127,33 @@ span.sidenav-trigger {
     display: flex;
     justify-content: center;
     align-items: center
+}
+
+#main-login {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+#main-login label {
+    font-size: 1.3rem;
+}
+
+#main-login i {
+    color: #757575;
+    margin-top: 5px;
+}
+
+.login-holder {
+    margin: 0;
+}
+
+#login-card {
+    padding: 0 30px;
+}
+
+.login-title-holder {
+    margin-bottom: 0;
 }
 
 @media only screen and (min-width: 401px) {
