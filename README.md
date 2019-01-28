@@ -39,6 +39,6 @@ format (123) 456-7890, it only allow to input numbers no more than 10 digits. wh
 data is sent to the server to create a record, phone number sent in format
 1234567890
 * date of birth (with calendar plugin)
-API for users manipulation you should use fake api that can be found on this url
+* API for users manipulation use fake api that can be found on this url
 https://reqres.in/
 
