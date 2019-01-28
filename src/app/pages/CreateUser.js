@@ -28,9 +28,15 @@ class CreateUser extends Component {
             },
             body: JSON.stringify(userData),
         })
+            .then(response => response.json())
             .then(response => {
                 console.log(response);
-                alert("User is created")
+                alert(`New user is created at ${response.createdAt}. 
+                        User data:
+                        id ${response.id}, 
+                        name ${response.name}, 
+                        tel ${response.tel}, 
+                        dateOfBirth ${response.dateOfBirth} `)
             });
     }
 

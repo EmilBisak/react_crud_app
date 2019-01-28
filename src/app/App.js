@@ -22,14 +22,13 @@ class App extends Component {
         <Switch>
           <Route exact path="/users" component={Users} />
           <Route path="/create_user" component={CreateUser} />
-          <Redirect path='/logedIn' to='/users' />
+          <Redirect path='/' to='/users' />
         </Switch>
         <Footer />
       </Fragment>
       :
       <Switch>
         <Route exact path='/' component={Login} />
-        <Redirect path='/' to='/' />
       </Switch>
   }
 }
