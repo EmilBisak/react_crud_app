@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import HOC from '../HOC/HOC';
+import logo from '../assets/logo.png';
 
 class Login extends Component {
     state = {
@@ -65,7 +66,7 @@ class Login extends Component {
                             <div className="z-depth-4 card" id="login-card">
                                 <div className="row">
                                     <div className="input-field col s12 center login-title-holder">
-                                        <img src="/logo.png" alt="" className="circle responsive-img valign profile-image-login" />
+                                        <img src={logo} alt="logo" className="circle responsive-img valign profile-image-login" />
                                     </div>
                                 </div>
 
