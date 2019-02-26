@@ -10,7 +10,7 @@ body {
 }
 
 main {
-    min-height: 100%;
+    min-height: calc(100vh - 94px);
     margin-bottom: -30px;
 }
 
@@ -41,7 +41,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 104px);
+    min-height: calc(100vh - 75px);
 }
 
 .loading-holder img {
@@ -107,13 +107,10 @@ li.transparent:hover {
 }
 
 #main-footer {
-    height: 40px;
-    padding: 0;
-    position: absolute;
-    bottom: 0;
     width: 100%;
     color: #fff;
-    /* z-index: 4; */
+    padding: 0;
+    height: 40px;
 }
 
 #main-footer small {
@@ -160,6 +157,12 @@ li.transparent:hover {
 @media only screen and (min-width: 401px) {
     #mobile-demo {
         width: 300px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    main {
+        min-height: calc(100vh - 85px);
     }
 }
 
