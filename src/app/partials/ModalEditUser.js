@@ -31,7 +31,7 @@ class ModalEditUser extends Component {
                                         <label htmlFor="lastName">Last Name</label>
                                     </div>
                                 </div>
-                                <button className="btn waves-effect waves-light" type="button" name="action"
+                                <button className="btn waves-effect waves-light modal-btns" type="button" name="action"
                                     onClick={() => editUser(
                                         {
                                             "first_name": firstName ? firstName : user.data.first_name,
@@ -41,8 +41,8 @@ class ModalEditUser extends Component {
                                     Edit User
             <i className="material-icons right">edit</i>
                                 </button>
-                                <button className="btn waves-effect waves-light red lighten-1 right" type="submit" name="action" onClick={closeModal}>Cancel
-            <i className="material-icons left">cancel</i>
+                                <button className="btn waves-effect waves-light red lighten-1 right modal-btns" type="submit" name="action" onClick={closeModal}>Cancel
+            <i className="material-icons right">cancel</i>
                                 </button>
                                 <p className="red-text"></p>
                             </form>

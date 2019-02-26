@@ -195,18 +195,18 @@ class Users extends Component {
   };
 
   render() {
-    const { 
-      pageNumber, 
-      users, 
-      user, 
-      loading, 
-      isModalActive, 
-      firstName, 
-      lastName, 
-      edited_user_id, 
-      first_name_edited, 
-      last_name_edited, 
-      deleted_user_id, 
+    const {
+      pageNumber,
+      users,
+      user,
+      loading,
+      isModalActive,
+      firstName,
+      lastName,
+      edited_user_id,
+      first_name_edited,
+      last_name_edited,
+      deleted_user_id,
       isUserDeleted } = this.state;
 
     let usersJSX = !users
