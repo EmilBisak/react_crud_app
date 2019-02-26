@@ -90,6 +90,10 @@ li.transparent:hover {
     min-height: 450px;
 }
 
+#create-user-main .container {
+    min-height: 530px;
+}
+
 #create-user-main form {
     position: relative;
     top: 80px;
