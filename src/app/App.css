@@ -10,7 +10,7 @@ body {
 }
 
 main {
-    min-height: calc(100vh - 74px);
+    min-height: calc(100vh - 94px);
     margin-bottom: -30px;
 }
 
@@ -90,6 +90,9 @@ li.transparent:hover {
     min-height: 450px;
 }
 
+#create-user-main {
+    min-height: calc(100vh - 74px);
+}
 #create-user-main .container {
     min-height: 530px;
 }
